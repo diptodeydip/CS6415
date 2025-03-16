@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/template.html}">
+<head>
+    <meta charset="UTF-8">
+    <title>Feedback</title>
+    <style>
+        .form-container {
+            max-width: 400px;
+            margin: 20px auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            background-color: #f9f9f9;
+        }
+        .form-container label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        .form-container input, .form-container textarea {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .form-container button {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 10px;
+            width: 100%;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .form-container button:hover {
+            background-color: #218838;
+        }
+        h3 {
+            text-align: center;
+        }
+
+
+    </style>
+</head>
+<body>
+
+<div class="center-text" layout:fragment="custom-content">
+    <div class="form-container">
+        <h3>Send Feedback</h3>
+
+        <div th:if="${message}">
+            <!-- Success Modal -->
+            <div class="modal-overlay">
+                <div class="modal">
+                    <p th:text="${message}"></p>
+                    <button class="close-btn" onclick="closeModal()">Close</button>
+                </div>
+            </div>
+        </div>
+
+        <form  th:action="@{/submitFeedback}" th:object="${feedbackDTO}" method="post">
+
+            <label for="feedback">Write here</label>
+            <textarea id="feedback" th:field="*{description}" name="feedback" rows="3" required></textarea>
+
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>

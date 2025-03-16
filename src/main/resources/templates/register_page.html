@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Register</title>
+    <link rel="stylesheet" href="/css/common.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+            margin: 0;
+        }
+        .register-container {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            width: 350px;
+            text-align: center;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            box-sizing: border-box;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        label {
+            float: left;
+        }
+    </style>
+</head>
+<body>
+<div class="register-container">
+    <h2>Register</h2>
+    <hr />
+
+    <form th:action="@{/register}" th:object="${appUserDTO}" method="post">
+
+        <label>First Name</label>
+        <input type="text" th:field="*{firstName}" class="form-control"
+               required/><p th:if="${#fields.hasErrors('firstName')}" class="warning"
+                            th:errors="*{firstName}"></p>
+        <label>Last Name</label>
+        <input type="text" th:field="*{lastName}" class="form-control"
+               required/><p th:if="${#fields.hasErrors('lastName')}" class="warning"
+                            th:errors="*{lastName}"></p>
+        <label>Email</label>
+        <input type="email" th:field="*{email}" class="form-control" placeholder="Email" required />
+        <p th:if="${#fields.hasErrors('email')}" class="warning"
+           th:errors="*{email}"></p>
+        <label>Password</label>
+        <input type="password" th:field="*{password}" class="form-control"
+               required/><p th:if="${#fields.hasErrors('password')}" class="warning"
+                            th:errors="*{password}"></p>
+        <label>Confirm Password</label>
+        <input type="password" th:field="*{confirmPassword}" class="form-control"
+               required/><p th:if="${#fields.hasErrors('confirmPassword')}" class="warning"
+                            th:errors="*{confirmPassword}"></p>
+        <button type="submit">Register</button>
+    </form>
+    <div class="login">
+        <p><a th:href="@{/loginPage}">Return</a></p>
+    </div>
+</div>
+</body>
+</html>

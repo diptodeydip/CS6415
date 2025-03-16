@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{iam.html}">
+<head>
+    <title>User Requests</title>
+</head>
+<body>
+
+<div layout:fragment="custom-content">
+    <h2>User Creation Requests</h2>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="request : ${userRequests}">
+            <td th:text="${request.id}"></td>
+            <td th:text="${request.username}"></td>
+            <td th:text="${request.email}"></td>
+            <td>
+                <form th:action="@{/approve-request}" method="post">
+                    <input type="hidden" name="id" th:value="${request.id}">
+                    <button type="submit" class="btn btn-success">Approve</button>
+                </form>
+                <form th:action="@{/reject-request}" method="post" class="d-inline">
+                    <input type="hidden" name="id" th:value="${request.id}">
+                    <button type="submit" class="btn btn-danger">Reject</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>

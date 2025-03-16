@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+    <title>Welcome</title>
+    <link rel="stylesheet" href="/css/common.css">
+    <link rel="stylesheet" href="/css/modal.css">
+    <link rel="stylesheet" href="/css/feedbackModal.css">
+    <link rel="stylesheet" href="/css/navBar.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .container {
+            padding: 20px;
+            height: 100vh; /* Ensure it takes full height */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar">
+    <a th:href="@{/index}" class="navbar-brand" th:text="'Welcome ' + ${session.name}">Welcome, ...</a>
+    <ul class="right">
+        <li class="dropdown">
+            <a href="javascript:void(0)" class="dropbtn"><i class="fa fa-bars" aria-hidden="true"></i></a>
+            <div class="dropdown-content">
+                <a th:href="@{/profile}">Profile</a>
+                <a th:href="@{/index}">Home</a>
+                <a th:href="@{/products}">Products</a>
+                <a th:href="@{/addProductPage}">Add Product</a>
+                <a th:href="@{/changePasswordForm}">Change Password</a>
+                <a sec:authorize="hasAuthority(T(com.example.IAM.Commons).ROLE_USER)" th:href="@{/feedback}">Leave Feedback</a>
+                <a sec:authorize="hasAuthority(T(com.example.IAM.Commons).ROLE_ADMIN)" th:href="@{/feedbacks}"  >Feedbacks</a>
+
+            </div>
+        </li>
+        <li><a th:href="@{/logout}">Logout</a></li>
+    </ul>
+</nav>
+
+    <div class="container" layout:fragment="custom-content">
+        <p>Custom content will be shown here if inherited from another</p>
+    </div>
+
+
+<script>
+    // Function to close the modal
+    function closeModal() {
+        document.querySelector('.modal-overlay').style.display = 'none';
+    }
+
+</script>
+</body>
+</html>
