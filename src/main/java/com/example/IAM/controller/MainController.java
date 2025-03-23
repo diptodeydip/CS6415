@@ -1,12 +1,17 @@
 package com.example.IAM.controller;
 import com.example.IAM.Commons;
 import com.example.IAM.DTO.AppUserDTO;
+import com.example.IAM.DTO.OtpCode;
 import com.example.IAM.database.UserRepository;
 import com.example.IAM.model.AppUser;
 import com.example.IAM.service.CacheService;
+import com.example.IAM.service.EmailService;
 import com.example.IAM.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -23,7 +28,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/")
@@ -41,6 +48,9 @@ public class MainController {
     @Autowired
     private CacheService cacheService;
 
+    @Autowired
+    private EmailService emailService;
+
     @GetMapping("index")
     public String index(Model model, HttpSession session) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -53,6 +63,42 @@ public class MainController {
         session.setAttribute(Commons.role, appUser.get().getRole());
 
         return "index";
+    }
+
+    @GetMapping("mfa")
+    public String mfa(Model model) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String email = authentication.getName(); // Fetch logged-in username
+        String otp = emailService.generateOTP();
+        cacheService.putData(email, Integer.valueOf(otp));
+        emailService.sendOtp(email, otp);
+        model.addAttribute(new OtpCode());
+        return "mfa";
+    }
+
+    @PostMapping("otp")
+    public String mfa(@ModelAttribute OtpCode otpCode, RedirectAttributes redirectAttributes) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String email = authentication.getName(); // Fetch logged-in username
+
+        if (cacheService.getData(email) != null && cacheService.getData(email).toString().equals(otpCode.getCode())) {
+            // Get existing roles
+            List<GrantedAuthority> updatedAuthorities = authentication.getAuthorities().stream()
+                .map(authority -> new SimpleGrantedAuthority(authority.getAuthority()))
+                .collect(Collectors.toList());
+            // Add new role
+            updatedAuthorities.add(new SimpleGrantedAuthority(Commons.MFA_VERIFIED));
+            // Create new authentication token
+            Authentication newAuth = new UsernamePasswordAuthenticationToken(authentication.getPrincipal(),
+                    authentication.getCredentials(), updatedAuthorities);
+            // Update Security Context
+            SecurityContextHolder.getContext().setAuthentication(newAuth);
+
+            return "redirect:/index";
+        }
+
+        redirectAttributes.addFlashAttribute("message", "Invalid OTP");
+        return "redirect:/mfa";
     }
 
     @GetMapping("loginPage")
