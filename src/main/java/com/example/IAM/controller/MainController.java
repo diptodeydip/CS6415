@@ -2,6 +2,7 @@ package com.example.IAM.controller;
 import com.example.IAM.Commons;
 import com.example.IAM.DTO.AppUserDTO;
 import com.example.IAM.DTO.OtpCode;
+import com.example.IAM.database.RoleRepository;
 import com.example.IAM.database.UserRepository;
 import com.example.IAM.model.AppUser;
 import com.example.IAM.service.CacheService;
@@ -50,6 +51,9 @@ public class MainController {
 
     @Autowired
     private EmailService emailService;
+
+    @Autowired
+    RoleRepository roleRepository;
 
     @GetMapping("index")
     public String index(Model model, HttpSession session) {
@@ -121,7 +125,7 @@ public class MainController {
             cacheService.putData(ipAddress, 1);
         }
 
-        redirectAttributes.addFlashAttribute("message", "Invalid username or password!");
+        redirectAttributes.addFlashAttribute("message", "Something went wrong");
         return "redirect:/loginPage";
     }
 
@@ -130,6 +134,7 @@ public class MainController {
     public String register(Model model) {
         AppUserDTO appUserDTO = new AppUserDTO();
         model.addAttribute(appUserDTO);
+        model.addAttribute("items", roleRepository.findAll());
         return "register_page";
     }
 
@@ -165,7 +170,8 @@ public class MainController {
             newUser.setEmail(appUserDTO.getEmail());
             newUser.setCreatedAt(new Date());
             newUser.setPassword(passwordEncoder.encode(appUserDTO.getPassword()));
-            newUser.setRole(Commons.ROLE_USER);
+            newUser.setVerified(false);
+            newUser.setRole(appUserDTO.getRole());
 
             repo.save(newUser);
 

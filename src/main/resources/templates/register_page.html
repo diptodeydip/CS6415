@@ -22,7 +22,7 @@
             width: 350px;
             text-align: center;
         }
-        input {
+        input, select {
             width: 100%;
             padding: 10px;
             margin: 10px 0;
@@ -67,6 +67,11 @@
         <input type="email" th:field="*{email}" class="form-control" placeholder="Email" required />
         <p th:if="${#fields.hasErrors('email')}" class="warning"
            th:errors="*{email}"></p>
+        <label>Select Role</label>
+        <select id="item" th:field="*{role}" required>
+            <option value="">-- Select --</option>
+            <option th:each="item : ${items}" th:value="${item.name}" th:text="${item.name}"></option>
+        </select>
         <label>Password</label>
         <input type="password" th:field="*{password}" class="form-control"
                required/><p th:if="${#fields.hasErrors('password')}" class="warning"

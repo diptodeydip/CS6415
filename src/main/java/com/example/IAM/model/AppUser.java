@@ -28,6 +28,9 @@ public class AppUser {
     @Column(nullable = false)
     private String role;
 
+    @Column(nullable = false)
+    private boolean verified;
+
     private Date createdAt;
 
     public Long getId() {
@@ -76,6 +79,14 @@ public class AppUser {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public boolean isVerified() {
+        return verified;
+    }
+
+    public void setVerified(boolean verified) {
+        this.verified = verified;
     }
 
     public Date getCreatedAt() {

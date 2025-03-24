@@ -21,7 +21,7 @@ public class CustomUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         Optional<AppUser> appUser = repo.findByEmail(email);
 
-        if (appUser.isPresent()){
+        if (appUser.isPresent() && appUser.get().isVerified()){
             return new CustomUserDetails(appUser.get());
         }
 

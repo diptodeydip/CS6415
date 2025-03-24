@@ -3,34 +3,87 @@
       layout:decorate="~{iam.html}">
 <head>
     <title>User Requests</title>
+    <style>
+        /* General Page Styling */
+
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+
+
+        /* Action buttons */
+        .product-card .action-buttons {
+            margin-top: 10px;
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .unlock-btn, .lock-btn {
+            padding: 8px 12px;
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+            color: white;
+            border-radius: 5px;
+            display: inline-block;
+            font-size: 14px;
+        }
+
+        .unlock-btn {
+            background-color: #808080;
+        }
+
+        .lock-btn {
+            background-color: #dc3545;
+        }
+
+        .unlock-btn:hover {
+            background-color: #666666;
+        }
+
+        .lock-btn:hover {
+            background-color: #c82333;
+        }
+    </style>
 </head>
 <body>
 
 <div layout:fragment="custom-content">
-    <h2>User Creation Requests</h2>
+    <h2></h2>
+    <!-- Success Alert -->
+    <div th:if="${message}" class="alert alert-success">
+        <p th:text="${message}"></p>
+    </div>
     <table class="table">
         <thead>
         <tr>
-            <th>ID</th>
-            <th>Username</th>
+            <th>First Name</th>
+            <th>Last Name</th>
             <th>Email</th>
+            <th>Role</th>
+            <th>Status</th>
+            <th>Created At</th>
             <th>Actions</th>
         </tr>
         </thead>
         <tbody>
-        <tr th:each="request : ${userRequests}">
-            <td th:text="${request.id}"></td>
-            <td th:text="${request.username}"></td>
-            <td th:text="${request.email}"></td>
+        <tr th:each="user : ${users}">
+            <td th:text="${user.firstName}"></td>
+            <td th:text="${user.lastName}"></td>
+            <td th:text="${user.email}"></td>
+            <td th:text="${user.role}"></td>
+            <td th:if="${user.verified}" >Verified</td>
+            <td th:if="${!user.verified}" >Locked</td>
+            <td th:text="${user.createdAt}"></td>
             <td>
-                <form th:action="@{/approve-request}" method="post">
-                    <input type="hidden" name="id" th:value="${request.id}">
-                    <button type="submit" class="btn btn-success">Approve</button>
-                </form>
-                <form th:action="@{/reject-request}" method="post" class="d-inline">
-                    <input type="hidden" name="id" th:value="${request.id}">
-                    <button type="submit" class="btn btn-danger">Reject</button>
-                </form>
+                <div class="action-buttons">
+                    <a th:href="@{'/reject-request/' + ${user.id}}" class="lock-btn"
+                       th:if="${user.verified and user.role != 'ADMIN'}">Lock</a>
+                    <a th:href="@{'/approve-request/' + ${user.id}}" class="unlock-btn"
+                       th:if="${!user.verified}">Unlock</a>
+                </div>
             </td>
         </tr>
         </tbody>
