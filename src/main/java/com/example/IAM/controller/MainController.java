@@ -5,6 +5,7 @@ import com.example.IAM.DTO.OtpCode;
 import com.example.IAM.database.RoleRepository;
 import com.example.IAM.database.UserRepository;
 import com.example.IAM.model.AppUser;
+import com.example.IAM.model.Role;
 import com.example.IAM.service.CacheService;
 import com.example.IAM.service.EmailService;
 import com.example.IAM.service.UserService;
@@ -60,11 +61,11 @@ public class MainController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String email = authentication.getName(); // Fetch logged-in username
         Optional<AppUser> appUser = repo.findByEmail(email);
-
+        Role role = roleRepository.findByName(appUser.get().getRole()).get();
         // Store username in session
         session.setAttribute(Commons.name, appUser.get().getFirstName()+ " " + appUser.get().getLastName());
         session.setAttribute(Commons.userId, appUser.get().getId());
-        session.setAttribute(Commons.role, appUser.get().getRole());
+        session.setAttribute(Commons.permissions, role.getPermissions());
 
         return "index";
     }
@@ -160,6 +161,7 @@ public class MainController {
         }
 
         if (result.hasErrors()){
+            model.addAttribute("items", roleRepository.findAll());
             return "register_page";
         }
 

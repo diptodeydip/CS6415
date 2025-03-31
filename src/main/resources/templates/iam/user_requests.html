@@ -79,9 +79,9 @@
             <td th:text="${user.createdAt}"></td>
             <td>
                 <div class="action-buttons">
-                    <a th:href="@{'/reject-request/' + ${user.id}}" class="lock-btn"
+                    <a th:href="@{'/iam/reject-request/' + ${user.id}}" class="lock-btn"
                        th:if="${user.verified and user.role != 'ADMIN'}">Lock</a>
-                    <a th:href="@{'/approve-request/' + ${user.id}}" class="unlock-btn"
+                    <a th:href="@{'/iam/approve-request/' + ${user.id}}" class="unlock-btn"
                        th:if="${!user.verified}">Unlock</a>
                 </div>
             </td>

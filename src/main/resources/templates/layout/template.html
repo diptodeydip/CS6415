@@ -40,10 +40,11 @@
                 <a th:href="@{/profile}">Profile</a>
                 <a th:href="@{/index}">Home</a>
                 <a th:href="@{/products}">Products</a>
-                <a th:href="@{/addProductPage}">Add Product</a>
+                <a sec:authorize="hasAuthority(T(com.example.IAM.Commons).ADD_PRODUCT_PERMISSION)" th:href="@{/addProductPage}">Add Product</a>
                 <a th:href="@{/changePasswordForm}">Change Password</a>
-                <a sec:authorize="hasAuthority(T(com.example.IAM.Commons).ROLE_USER)" th:href="@{/feedback}">Leave Feedback</a>
-                <a sec:authorize="hasAuthority(T(com.example.IAM.Commons).ROLE_ADMIN)" th:href="@{/feedbacks}"  >Feedbacks</a>
+                <a sec:authorize="hasAuthority(T(com.example.IAM.Commons).Provide_Feedback_PERMISSION)" th:href="@{/feedback}">Leave Feedback</a>
+                <a sec:authorize="hasAuthority(T(com.example.IAM.Commons).See_Feedback_PERMISSION)" th:href="@{/feedbacks}"  >Feedbacks</a>
+                <a sec:authorize="hasAuthority(T(com.example.IAM.Commons).Admin_Panel_PERMISSION)" th:href="@{/iam}" target="_blank">Admin Panel</a>
 
             </div>
         </li>

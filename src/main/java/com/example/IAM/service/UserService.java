@@ -11,6 +11,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
+import java.util.Arrays;
 import java.util.Optional;
 
 @Service
@@ -50,7 +51,8 @@ public class UserService {
         return product.isPresent() && session.getAttribute(Commons.userId) == product.get().getOwnerId();
     }
 
-    public boolean isAdmin(String role){
-        return role.equals(Commons.ROLE_ADMIN);
+    public boolean hasDeleteAccess(String permissions){
+        String[] permissionArray = permissions.split(",\\s*");
+        return Arrays.asList(permissionArray).contains(Commons.Delete_Any_Product_PERMISSION);
     }
 }

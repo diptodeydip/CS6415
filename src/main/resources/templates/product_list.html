@@ -146,7 +146,7 @@
                        th:if="${session.userId == product.ownerId}">Edit</a>
                     <a th:href="@{'/products/delete/' + ${product.id}}" class="delete-btn"
                        onclick="return confirm('Are you sure you want to delete this product?')"
-                       th:if="${session.userId == product.ownerId or #authorization.expression('hasAuthority(T(com.example.IAM.Commons).ROLE_ADMIN)')}">Delete</a>
+                       th:if="${session.userId == product.ownerId or #authorization.expression('hasAuthority(T(com.example.IAM.Commons).Delete_Any_Product_PERMISSION)')}">Delete</a>
                 </div>
             </div>
         </div>

@@ -3,5 +3,5 @@ SELECT 1, CURRENT_TIMESTAMP, 'dipdey093@gmail.com', '$2b$12$cVmV3NHc.ooMEgYTuaaG
     WHERE NOT EXISTS (SELECT * FROM `users` WHERE `email`='dipdey093@gmail.com');
 
 INSERT INTO `roles` (id, name, permissions)
-SELECT 1, 'ADMIN', 'ROLE_ADMIN'
+SELECT 1, 'ADMIN', 'AddProduct,AdminPanel,ProvideFeedback,SeeFeedback,DeleteAnyProduct'
     WHERE NOT EXISTS (SELECT * FROM `roles` WHERE `name`='ADMIN');

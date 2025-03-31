@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -57,7 +58,7 @@ public class ProfileController {
 
     @PostMapping("updateProfile")
     public String updateProfile(Model model, @Valid @ModelAttribute AppUserDTO appUserDTO
-            , BindingResult result, HttpSession session) {
+            , BindingResult result, HttpSession session, RedirectAttributes redirectAttributes) {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String email = authentication.getName(); // Fetch logged-in username
@@ -75,8 +76,8 @@ public class ProfileController {
         }
         userService.updateProfile(email, appUserDTO);
         session.setAttribute(Commons.name, appUserDTO.getFirstName()+ " " + appUserDTO.getLastName());
-        model.addAttribute("message", "Profile updated.");
-        return "user_profile";
+        redirectAttributes.addFlashAttribute("message", "Profile updated.");
+        return "redirect:/profile";
     }
 
     @GetMapping("changePasswordForm")

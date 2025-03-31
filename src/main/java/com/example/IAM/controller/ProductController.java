@@ -101,7 +101,7 @@ public class ProductController {
     @GetMapping("products/delete/{id}")
     public String deleteProduct(@PathVariable Long id, RedirectAttributes redirectAttributes, HttpSession session) {
         Optional<Product> product = productRepo.findById(id);
-        if (userService.isSameUser(product, session) || (userService.isAdmin((String) session.getAttribute(Commons.role)) && product.isPresent())) {
+        if (userService.isSameUser(product, session) || (userService.hasDeleteAccess((String) session.getAttribute(Commons.permissions)) && product.isPresent())) {
             productRepo.deleteById(id);
             redirectAttributes.addFlashAttribute("message", "Product deleted successfully!");
 

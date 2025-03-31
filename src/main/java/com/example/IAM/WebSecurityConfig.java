@@ -30,9 +30,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable().authorizeRequests() //authorization check happens in bottom to top manner. matcher with arbitrary scope is placed in bottom.
-                .antMatchers(  "/register", "/registerPage", "/css/**").permitAll()
-                .antMatchers("/feedback", "/submitFeedback").hasAuthority(Commons.ROLE_USER)
-                .antMatchers("/feedbacks").hasAuthority(Commons.ROLE_ADMIN)
+                .antMatchers(  "/register", "/registerPage", "/css/**", "/favicon.ico").permitAll()
+                .antMatchers("/feedback", "/submitFeedback")
+                .access("hasAuthority('" + Commons.Provide_Feedback_PERMISSION + "') and hasAuthority('" + Commons.MFA_VERIFIED + "')")
+                .antMatchers("/feedbacks")
+                .access("hasAuthority('" + Commons.See_Feedback_PERMISSION + "') and hasAuthority('" + Commons.MFA_VERIFIED + "')")
+                .antMatchers("/iam/**", "/user-requests", "/role-management")
+                .access("hasAuthority('" + Commons.Admin_Panel_PERMISSION + "') and hasAuthority('" + Commons.MFA_VERIFIED + "')")
+                .antMatchers("/addProductPage", "/addProduct")
+                .access("hasAuthority('" + Commons.ADD_PRODUCT_PERMISSION + "') and hasAuthority('" + Commons.MFA_VERIFIED + "')")
                 .antMatchers("/mfa", "/otp").authenticated()
                 .antMatchers("/**").hasAuthority(Commons.MFA_VERIFIED)
                 .anyRequest().authenticated() //means all the request url should be mfa verified, but some exceptions are mentioned above.

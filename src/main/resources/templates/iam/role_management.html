@@ -28,7 +28,7 @@
         <p th:text="${message}"></p>
     </div>
 
-    <form th:action="@{/create-role}" th:object="${roleDTO}" method="post">
+    <form th:action="@{/iam/create-role}" th:object="${roleDTO}" method="post">
         <div class="mb-3">
 
             <label for="name">Role Name</label>
@@ -39,31 +39,31 @@
         <div class="mb-3">
             <label class="form-label">Select Access Permissions</label>
             <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="readAccess" name="accessList" value="READ" onchange="updateAccessList()">
-                <label class="form-check-label" for="readAccess">Read</label>
+                <input class="form-check-input" type="checkbox" id="AddProduct" name="accessList" value="AddProduct" onchange="updateAccessList()">
+                <label class="form-check-label" for="AddProduct">Add Product</label>
             </div>
             <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="writeAccess" name="accessList" value="WRITE" onchange="updateAccessList()">
-                <label class="form-check-label" for="writeAccess">Write</label>
+                <input class="form-check-input" type="checkbox" id="AdminPanel" name="accessList" value="AdminPanel" onchange="updateAccessList()">
+                <label class="form-check-label" for="AdminPanel">Admin Panel</label>
             </div>
             <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="deleteAccess" name="accessList" value="DELETE" onchange="updateAccessList()">
-                <label class="form-check-label" for="deleteAccess">Delete</label>
+                <input class="form-check-input" type="checkbox" id="ProvideFeedback" name="accessList" value="ProvideFeedback" onchange="updateAccessList()">
+                <label class="form-check-label" for="ProvideFeedback">Provide Feedback</label>
             </div>
             <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="manageUsersAccess" name="accessList" value="MANAGE_USERS" onchange="updateAccessList()">
-                <label class="form-check-label" for="manageUsersAccess">Manage Users</label>
+                <input class="form-check-input" type="checkbox" id="SeeFeedback" name="accessList" value="SeeFeedback" onchange="updateAccessList()">
+                <label class="form-check-label" for="SeeFeedback">See Feedback</label>
             </div>
             <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="manageRolesAccess" name="accessList" value="MANAGE_ROLES" onchange="updateAccessList()">
-                <label class="form-check-label" for="manageRolesAccess">Manage Roles</label>
+                <input class="form-check-input" type="checkbox" id="DeleteAnyProduct" name="accessList" value="DeleteAnyProduct" onchange="updateAccessList()">
+                <label class="form-check-label" for="DeleteAnyProduct">Delete Any Product</label>
             </div>
         </div>
 
         <!-- Hidden input to store selected access values -->
         <input type="hidden" id="selectedAccess" name="selectedAccess" th:field="*{permissions}">
 
-        <button type="submit" class="btn btn-primary">Create Role</button>
+        <button type="submit" onclick="return confirm('Are you sure you want to add this role?')" class="btn btn-primary">Create Role</button>
     </form>
 
     <h2 class="mt-4">Existing Roles</h2>
@@ -82,7 +82,7 @@
             <td th:text="${role.name}"></td>
             <td th:text="${role.permissions}"></td>
             <td>
-                <a th:href="@{'/role-management/edit/' + ${role.id}}" class="edit-btn"
+                <a th:href="@{'/iam/role-management/edit/' + ${role.id}}" class="edit-btn"
                    >Edit</a>
             </td>
         </tr>

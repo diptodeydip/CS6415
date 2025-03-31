@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{iam.html}">
+<head>
+    <title>Role Management</title>
+    <script>
+        function updateAccessList() {
+            var selected = [];
+            var checkboxes = document.querySelectorAll('input[name="accessList"]:checked');
+            checkboxes.forEach((checkbox) => {
+                selected.push(checkbox.value);
+            });
+            document.getElementById("selectedAccess").value = selected.join(",");
+        }
+    </script>
+</head>
+<body>
+
+<div layout:fragment="custom-content">
+    <h2>Edit Role</h2>
+
+    <form th:action="@{/iam/edit-role}" th:object="${roleDTO}" method="post">
+        <div class="mb-3">
+            <input type="hidden" th:field="*{id}" />
+            <label for="name">Role Name</label>
+            <input type="text" id="name" th:field="*{name}" class="form-control" placeholder="Role Name"
+                   required/>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Select Access Permissions</label>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="addProduct" name="accessList" value="AddProduct"
+                       th:checked="${roleDTO.permissions.contains('AddProduct')}" onchange="updateAccessList()">
+                <label class="form-check-label" for="addProduct">Add Product</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="adminPanel" name="accessList" value="AdminPanel"
+                       th:checked="${roleDTO.permissions.contains('AdminPanel')}" onchange="updateAccessList()">
+                <label class="form-check-label" for="adminPanel">Admin Panel</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="ProvideFeedback" name="accessList" value="ProvideFeedback"
+                       th:checked="${roleDTO.permissions.contains('ProvideFeedback')}" onchange="updateAccessList()">
+                <label class="form-check-label" for="ProvideFeedback">Provide Feedback</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="SeeFeedback" name="accessList" value="SeeFeedback"
+                       th:checked="${roleDTO.permissions.contains('SeeFeedback')}" onchange="updateAccessList()">
+                <label class="form-check-label" for="SeeFeedback">See Feedback</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="DeleteAnyProduct" name="accessList" value="DeleteAnyProduct"
+                       th:checked="${roleDTO.permissions.contains('DeleteAnyProduct')}" onchange="updateAccessList()">
+                <label class="form-check-label" for="DeleteAnyProduct">Delete Any Product</label>
+            </div>
+        </div>
+
+        <!-- Hidden input to store selected access values -->
+        <input type="hidden" id="selectedAccess" name="selectedAccess" th:field="*{permissions}">
+
+        <button type="submit" class="btn btn-primary">Update Role</button>
+    </form>
+</div>
+
+</body>
+</html>

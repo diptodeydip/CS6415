@@ -24,7 +24,6 @@ import java.util.Date;
 import java.util.Optional;
 
 @Controller
-@RequestMapping("/")
 public class AdminController {
 
     @Autowired
@@ -33,18 +32,18 @@ public class AdminController {
     @Autowired
     UserRepository userRepository;
 
-    @GetMapping("iam")
+    @GetMapping("/iam")
     public String index(Model model) {
         return "iam/iam";
     }
 
-    @GetMapping("user-requests")
+    @GetMapping("/user-requests")
     public String requests(Model model) {
         model.addAttribute("users", userRepository.findAll());
         return "iam/user_requests";
     }
 
-    @GetMapping("/reject-request/{id}")
+    @GetMapping("/iam/reject-request/{id}")
     public String reject(@PathVariable Long id, RedirectAttributes redirectAttributes, HttpSession session) {
         AppUser appUser = userRepository.findById(id).get();
         appUser.setVerified(false);
@@ -53,7 +52,7 @@ public class AdminController {
         return "redirect:/user-requests";
     }
 
-    @GetMapping("/approve-request/{id}")
+    @GetMapping("/iam/approve-request/{id}")
     public String approve(@PathVariable Long id, RedirectAttributes redirectAttributes, HttpSession session) {
         AppUser appUser = userRepository.findById(id).get();
         appUser.setVerified(true);
@@ -62,14 +61,14 @@ public class AdminController {
         return "redirect:/user-requests";
     }
 
-    @GetMapping("role-management")
+    @GetMapping("/role-management")
     public String role(Model model) {
         model.addAttribute("roles", roleRepository.findAll());
         model.addAttribute("roleDTO", new RoleDTO());
         return "iam/role_management";
     }
 
-    @PostMapping("create-role")
+    @PostMapping("/iam/create-role")
     public String addProduct(Model model, @ModelAttribute RoleDTO roleDTO, RedirectAttributes redirectAttributes) {
 
         Optional<Role> role = roleRepository.findByName(roleDTO.getName());
@@ -85,6 +84,30 @@ public class AdminController {
         roleRepository.save(newRole);
 
         redirectAttributes.addFlashAttribute("message", "Role created successfully!");
+        return "redirect:/role-management";
+    }
+
+    @GetMapping("/iam/role-management/edit/{id}")
+    public String editPage(Model model, @PathVariable Long id) {
+        Role role = roleRepository.findById(id).get();
+        RoleDTO roleDTO = new RoleDTO();
+        roleDTO.setId(role.getId());
+        roleDTO.setName(role.getName());
+        roleDTO.setPermissions(role.getPermissions());
+
+        model.addAttribute("roleDTO", roleDTO);
+        return "iam/update-role";
+    }
+
+    @PostMapping("/iam/edit-role")
+    public String editRole(Model model, @ModelAttribute RoleDTO roleDTO, RedirectAttributes redirectAttributes) {
+        Role role = new Role();
+        role.setPermissions(roleDTO.getPermissions());
+        role.setName(roleDTO.getName());
+        role.setId(roleDTO.getId());
+        roleRepository.save(role);
+
+        redirectAttributes.addFlashAttribute("message", "Role updated successfully!");
         return "redirect:/role-management";
     }
 }
