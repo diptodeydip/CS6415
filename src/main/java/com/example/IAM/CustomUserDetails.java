@@ -9,6 +9,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
@@ -32,8 +33,10 @@ public class CustomUserDetails implements UserDetails {
         List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
         String[] permissionArray = permissions.split(",\\s*"); // Split by comma and optional spaces
         for (String permission : permissionArray) {
-            GrantedAuthority authority = new SimpleGrantedAuthority(permission);
-            grantedAuthorities.add(authority);
+            if (!permission.isEmpty()){
+                GrantedAuthority authority = new SimpleGrantedAuthority(permission);
+                grantedAuthorities.add(authority);
+            }
         }
 
         return grantedAuthorities;
