@@ -2,17 +2,17 @@
 
 The project involves the design, implementation, security analysis, and hardening of a Spring Security-based IAM system. The project covers the achievement of the following goals on an incremental basis: 
 
-Create a secure IAM system using Spring Security-based authentication and authorization. 
+- Create a secure IAM system using Spring Security-based authentication and authorization. 
 
-Apply the principle of Least Privileges based on Role-Based Access Control (RBAC) and eliminate unauthorized access. 
+- Apply the principle of Least Privileges based on Role-Based Access Control (RBAC) and eliminate unauthorized access. 
 
-Conduct testing for IAM-based vulnerabilities such as privilege escalation, session hijack, and brute-force attack to confirm system vulnerabilities. 
+- Conduct testing for IAM-based vulnerabilities such as privilege escalation, session hijack, and brute-force attack to confirm system vulnerabilities. 
 
-Review auth logs and security events to detect threats and unauthorized access. 
+- Review auth logs and security events to detect threats and unauthorized access. 
 
-Implement security hardening features such as Multi-Factor Authentication (MFA), account lockout policies, and enhanced password security. 
+- Implement security hardening features such as Multi-Factor Authentication (MFA), account lockout policies, and enhanced password security. 
 
-Re-validate the system after deploying the mitigation measures to measure security improvements. 
+- Re-validate the system after deploying the mitigation measures to measure security improvements. 
 
   
 
