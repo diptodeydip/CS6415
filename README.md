@@ -23,11 +23,11 @@ The project entails a total security audit of the IAM processes involving attack
 
 ## Design and Deployment of an IAM System  
 
-- Implement a Spring Security IAM system with the following extra features Authentication and Authorization. [1] 
+- Implement a Spring Security IAM system with the following extra features Authentication and Authorization.
 
-- Define user roles and user permissions based on the Role-Based Access Control (RBAC) standards. [1] [5] 
+- Define user roles and user permissions based on the Role-Based Access Control (RBAC) standards.
 
-- Enforce a robust authentication process e.g. Password policy and implement Multi-Factor Authentication (MFA). [1] 
+- Enforce a robust authentication process e.g. Password policy and implement Multi-Factor Authentication (MFA).
 
 ## Simulated Attack Scenarios 
 
@@ -39,7 +39,7 @@ The project entails a total security audit of the IAM processes involving attack
 
 - Implement account lockout policies, stronger password policies, and access control lists (ACLs) to mitigate security threats. 
 
-- Secure Authentication through Mandatory Multifactor Authentication for Privileged Accounts. [3] 
+- Secure Authentication through Mandatory Multifactor Authentication for Privileged Accounts.
 
 ## Analysis and Documentation 
 
@@ -47,7 +47,23 @@ The project entails a total security audit of the IAM processes involving attack
 
 - Provide recommendations for further security improvements.
 
-#System Architecture Diagram 
+# Justification for Tool Selection 
+
+Several tools are selected and technologies based on their functionality, reliability, and conformity to the standards set within the industry for the effective and secure implementation of IAM. Each tool was selected with respect to a specific security requirement such as authentication, authorization, password protection, multi-factor authentication, intrusion detection, and security testing. The table below gives a brief overview of the selected tools, their purposes, and justifications for their inclusion in this project. [1] [4] [6] [7] 
+
+| Tool  | Purpose  | Justification  |
+|---|---|---|
+| Spring Security | Authentication & Authorization  | Incorporates built-in security support for IAM, integrates seamlessly with Java applications, and implements security best practices.  |
+| BCrypt | Password Hashing  | Uses secure hash functions to store passwords. |
+| OTP |Multi-Factor Authentication  | Adds an extra layer of verification to prevent credential-based threats.  |
+| MySQL| Database for User Management  | Stores user credentials, roles, and audit trails securely.  |
+| Burp Suite | Security Testing  | Identifies vulnerabilities in IAM implementations.  |
+
+Table 2: Justification for Tool Selection 
+
+Selection of these tools gives a robust, scalable, and secure solution of IAM with ease of deploying and industry standard security. 
+
+# System Architecture Diagram 
 
 Below is a high-level system architecture diagram illustrating how authentication, authorization, and security controls interact in the IAM system: 
 
