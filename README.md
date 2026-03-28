@@ -47,7 +47,7 @@ The project entails a total security audit of the IAM processes involving attack
 
 # Justification for Tool Selection 
 
-Several tools are selected and technologies based on their functionality, reliability, and conformity to the standards set within the industry for the effective and secure implementation of IAM. Each tool was selected with respect to a specific security requirement such as authentication, authorization, password protection, multi-factor authentication, intrusion detection, and security testing. The table below gives a brief overview of the selected tools, their purposes, and justifications for their inclusion in this project. [1] [4] [6] [7] 
+Several tools are selected and technologies based on their functionality, reliability, and conformity to the standards set within the industry for the effective and secure implementation of IAM. Each tool was selected with respect to a specific security requirement such as authentication, authorization, password protection, multi-factor authentication, and security testing. The table below gives a brief overview of the selected tools, their purposes, and justifications for their inclusion in this project.
 
 | Tool  | Purpose  | Justification  |
 |---|---|---|
@@ -57,7 +57,7 @@ Several tools are selected and technologies based on their functionality, reliab
 | MySQL| Database for User Management  | Stores user credentials, roles, and audit trails securely.  |
 | Burp Suite | Security Testing  | Identifies vulnerabilities in IAM implementations.  |
 
-Table 2: Justification for Tool Selection 
+Table 1: Justification for Tool Selection 
 
 Selection of these tools gives a robust, scalable, and secure solution of IAM with ease of deploying and industry standard security. 
 
