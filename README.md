@@ -1,5 +1,3 @@
-IAM system built with Spring Security featuring RBAC authentication, MFA, and security hardening with simulated attack testing (brute-force, privilege escalation).
-
 # Scope and Objectives of the Project: 
 
 The project involves the design, implementation, security analysis, and hardening of a Spring Security-based IAM system. The project covers the achievement of the following goals on an incremental basis: 
