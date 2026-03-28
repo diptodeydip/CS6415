@@ -14,11 +14,9 @@ The project involves the design, implementation, security analysis, and hardenin
 
 - Re-validate the system after deploying the mitigation measures to measure security improvements. 
 
-  
-
 The project entails a total security audit of the IAM processes involving attack simulation, audit of logs and security rules for authentication and authorization.
 
-#Methodology 
+# Methodology 
 
 
 ## Design and Deployment of an IAM System  
@@ -86,7 +84,7 @@ Figure 2: Flowchart of IAM System using Spring Security
 
 Figure 3: Attack Tree of IAM System 
 
-Entity Relationship Diagram: 
+## Entity Relationship Diagram: 
 
 <img width="612" height="420" alt="image" src="https://github.com/user-attachments/assets/5eb03f26-570a-4f64-9853-098087bf2f1c" />
 
